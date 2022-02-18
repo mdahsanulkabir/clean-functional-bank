@@ -14,12 +14,32 @@ function updateTotal(fieldId, amount){
     totalTag.innerText = newTotal;
 }
 
+function updateBalance(amount, isAdding){
+    const balanceTag = document.getElementById('balance-total');
+    const balanceInText = balanceTag.innerText;
+    const previousBlancce = parseFloat(balanceInText);
+    let newBalance;
+    if(isAdding){
+        newBalance = previousBlancce + amount;
+    }
+    else{
+        newBalance = previousBlancce - amount;
+    }
+    balanceTag.innerText = newBalance;
+}
+
 document.getElementById('deposit-button').addEventListener('click', function (){
     const amount = getInputValue('deposit-input');
-    updateTotal('deposit-total',amount);
-})
+    if(amount > 0){
+        updateTotal('deposit-total',amount);
+        updateBalance(amount, true);
+    }
+});
 
 document.getElementById('withdraw-button').addEventListener('click', function (){
     const amount = getInputValue('withdraw-input');
-    updateTotal('withdraw-total',amount);
-})
+    if(amount > 0){
+        updateTotal('withdraw-total',amount);
+        updateBalance(amount, false);
+    }
+});
